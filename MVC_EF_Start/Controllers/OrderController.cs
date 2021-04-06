@@ -135,7 +135,7 @@ namespace MVC_EF_Start.Controllers
 
             // Delete Operation
 
-            //dbContext.Products.Remove(ReadProduct2);
+            dbContext.Products.Remove(ReadProduct2);
 
             dbContext.SaveChanges();
             return View();
