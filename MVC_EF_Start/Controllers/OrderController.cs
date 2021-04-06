@@ -121,7 +121,6 @@ namespace MVC_EF_Start.Controllers
                                         .FirstOrDefault();
 
             Product ReadProduct2 = dbContext.Products
-                                        .Include(p => p.MyOrders)
                                         .Where(p => p.ProductName == "Tomato")
                                         .FirstOrDefault();
 
@@ -136,9 +135,37 @@ namespace MVC_EF_Start.Controllers
 
             // Delete Operation
 
-            dbContext.Products.Remove(ReadProduct2);
+            //dbContext.Products.Remove(ReadProduct2);
 
             dbContext.SaveChanges();
+            return View();
+        }
+
+        public ViewResult LINQOperations()
+        {
+            // Third Question
+
+            // Part One
+
+            Product ReqProductName = dbContext.Products
+                                            .Where(p => p.ProductName == "Apple")
+                                            .First();
+
+            List<OrderDetail> ReadOrders = dbContext.OrderProductDetails
+                                            .Where(o => o.ProductNumber == ReqProductName)
+                                            .ToList();
+
+
+            // Part Two
+
+            Product ReqProductName2 = dbContext.Products
+                                            .Where(p => p.ProductName == "Apple")
+                                            .Max();
+
+            OrderDetail Quote1 = dbContext.OrderProductDetails
+                                            .Where(o => o.ProductNumber == ReqProductName2)
+                                            .FirstOrDefault();
+
             return View();
         }
     }
