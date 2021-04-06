@@ -114,6 +114,7 @@ namespace MVC_EF_Start.Controllers
             dbContext.OrderProductDetails.Add(OrderDetailsSample3);
             dbContext.OrderProductDetails.Add(OrderDetailsSample4);
 
+            /*
             // Read Operation
 
             Product ReadProduct = dbContext.Products
@@ -136,6 +137,7 @@ namespace MVC_EF_Start.Controllers
             // Delete Operation
 
             dbContext.Products.Remove(ReadProduct2);
+            */
 
             dbContext.SaveChanges();
             return View();
@@ -155,18 +157,21 @@ namespace MVC_EF_Start.Controllers
                                             .Where(o => o.ProductNumber == ReqProductName)
                                             .ToList();
 
+            return View(ReadOrders);
 
-            // Part Two
+        }
+
+
+        // Part Two
+
+        public ViewResult CourseDetails()
+        {
 
             Product ReqProductName2 = dbContext.Products
                                             .Where(p => p.ProductName == "Apple")
                                             .Max();
 
-            OrderDetail Quote1 = dbContext.OrderProductDetails
-                                            .Where(o => o.ProductNumber == ReqProductName2)
-                                            .FirstOrDefault();
-
-            return View();
+            return View(ReqProductName2);
         }
     }
 }
