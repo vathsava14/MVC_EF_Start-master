@@ -1,7 +1,7 @@
-﻿
-namespace MVC_EF_Start.Models
+﻿namespace MVC_EF_Start.Models
 {
-  public class App_Models
-  {
-  }
+    public class App_Models
+    {
+
+    }
 }
