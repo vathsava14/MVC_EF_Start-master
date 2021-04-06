@@ -149,15 +149,16 @@ namespace MVC_EF_Start.Controllers
 
             // Part One
 
-            Product ReqProductName = dbContext.Products
-                                            .Where(p => p.ProductName == "Apple")
-                                            .First();
+            var a = dbContext.Orders
+                      .Include(o => o.Items)
+                      .Where(o => o.Items.Count != 0);
+            Console.WriteLine("Order List of a sold product");
+            foreach (var i in a)
+            {
+                Console.WriteLine("OrderID = {0}, OrderStatus = {1}, PaymentMode = {2}", i.ID, i.OrderStatus, i.PaymentMode);
+            } 
 
-            List<OrderDetail> ReadOrders = dbContext.OrderProductDetails
-                                            .Where(o => o.ProductNumber == ReqProductName)
-                                            .ToList();
-
-            return View(ReadOrders);
+            return View();
 
         }
 
@@ -167,11 +168,15 @@ namespace MVC_EF_Start.Controllers
         public ViewResult CourseDetails()
         {
 
-            Product ReqProductName2 = dbContext.Products
-                                            .Where(p => p.ProductName == "Apple")
-                                            .Max();
+            Order output = dbContext.OrderProductDetails
+                    .Where(op => op.ProductNumber.ProductName == "Apple")
+                    .OrderByDescending(op => op.ProductNumber.ProductQuantity)
+                    .Select(op => op.OrderNumber)
+                    .First();
+            Console.WriteLine("Order where maximum amount of Apples have been sold");
+            Console.WriteLine("OrderID = {0}, OrderStatus = {1}, PaymentMode = {2}", output.ID, output.OrderStatus, output.PaymentMode);
 
-            return View(ReqProductName2);
+            return View();
         }
     }
 }
